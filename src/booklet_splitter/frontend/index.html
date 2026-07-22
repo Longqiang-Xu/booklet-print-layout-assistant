@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PDF 小册子分册工具</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <h1>PDF 小册子分册工具</h1>
+          <p id="statusText">选择一个 PDF 开始</p>
+        </div>
+        <button id="selectPdfButton" class="button button-secondary" type="button">选择 PDF</button>
+      </header>
+
+      <section class="panel file-panel">
+        <div>
+          <span class="label">当前 PDF</span>
+          <div id="pdfName" class="file-name">未选择</div>
+          <div id="pdfPath" class="file-path"></div>
+        </div>
+        <div class="stats">
+          <div>
+            <span class="stat-value" id="pageCount">-</span>
+            <span class="stat-label">页</span>
+          </div>
+          <div>
+            <span class="stat-value" id="sheetCount">-</span>
+            <span class="stat-label">张纸</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <h2>拆分方式</h2>
+          <label class="mode-row">
+            <input id="modeMaxSheets" name="splitMode" type="radio" value="max_sheets" checked />
+            <span>每册最多</span>
+            <input id="maxSheetsInput" class="number-input" type="number" min="1" value="14" />
+            <span>张纸</span>
+          </label>
+          <label class="mode-row">
+            <input id="modeFixedCount" name="splitMode" type="radio" value="fixed_count" />
+            <span>固定分成</span>
+            <input id="bookletCountInput" class="number-input" type="number" min="1" value="1" />
+            <span>册</span>
+          </label>
+        </div>
+
+        <div class="panel">
+          <h2>输出目录</h2>
+          <div class="output-row">
+            <button id="selectOutputButton" class="button button-secondary" type="button">选择目录</button>
+            <div id="outputDir" class="output-path">未选择</div>
+          </div>
+          <button id="generateButton" class="button button-primary" type="button" disabled>生成分册 PDF</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-header">
+          <h2>推荐方案</h2>
+          <span id="planHint" class="hint"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>册数</th>
+                <th>纸张分配</th>
+                <th>源页范围</th>
+                <th>补空白</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody id="planTableBody">
+              <tr>
+                <td colspan="5" class="empty">选择 PDF 后显示方案</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="resultPanel" class="panel result-panel hidden">
+        <div class="section-header">
+          <h2>生成结果</h2>
+          <button id="openOutputButton" class="button button-secondary" type="button">打开目录</button>
+        </div>
+        <div id="resultSummary" class="result-summary"></div>
+        <ul id="resultList" class="result-list"></ul>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

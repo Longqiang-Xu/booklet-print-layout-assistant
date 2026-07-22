@@ -1,0 +1,22 @@
+.venv/
+.venv-*/
+.venv_*/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+*.spec
+*.egg-info/
+
+# Local/generated output
+*_booklets/
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
