@@ -1,5 +1,9 @@
 # Booklet Splitter
 
+[中文说明](README.zh-CN.md)
+
+![Booklet Splitter main window](docs/images/app-main.png)
+
 Booklet Splitter is a desktop tool for splitting a reading-order PDF into
 booklet-sized PDF parts. It is designed for PDFs that will later be printed as
 double-sided booklets, folded, and bound in multiple thin volumes.

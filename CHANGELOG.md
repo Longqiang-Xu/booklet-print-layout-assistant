@@ -11,4 +11,5 @@
 - Added Windows PyInstaller build script using a clean build virtual environment.
 - Added reproducible sample PDF generation.
 - Added release zip packaging script.
+- Added README screenshot, Chinese README, and v0.1.0 release notes.
 - Added planning, manifest, and PDF writer tests.
