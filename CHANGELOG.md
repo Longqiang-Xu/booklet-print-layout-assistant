@@ -9,4 +9,6 @@
 - Added pywebview desktop UI.
 - Added command line entry point.
 - Added Windows PyInstaller build script using a clean build virtual environment.
+- Added reproducible sample PDF generation.
+- Added release zip packaging script.
 - Added planning, manifest, and PDF writer tests.

@@ -9,7 +9,8 @@ if (-not (Test-Path -LiteralPath $python)) {
 }
 
 & $python -m pip install --upgrade pip
-& $python -m pip install -e ".[dev]"
+& $python -m pip install -e "."
+& $python -m pip install "pyinstaller>=6"
 & $python -m PyInstaller `
   --clean `
   --noconfirm `

@@ -4,6 +4,7 @@ from pathlib import Path
 
 from pypdf import PdfReader, PdfWriter
 from pypdf._page import PageObject
+from pypdf.generic import NameObject
 
 from booklet_splitter.core.manifest import write_manifest_files
 from booklet_splitter.core.models import BookletPlan, OutputBooklet, SplitResult
@@ -25,7 +26,7 @@ def clone_blank_like(page: PageObject) -> PageObject:
     blank.mediabox = page.mediabox
     blank.cropbox = page.cropbox
     if "/Rotate" in page:
-        blank["/Rotate"] = page["/Rotate"]
+        blank[NameObject("/Rotate")] = page["/Rotate"]
     return blank
 
 

@@ -128,6 +128,40 @@ Run:
 dist\BookletSplitter\BookletSplitter.exe
 ```
 
+## Examples
+
+Generate the sample PDF with:
+
+```powershell
+python .\scripts\create_example_pdf.py
+```
+
+The default output is:
+
+```text
+examples\sample-17-pages.pdf
+```
+
+Try it with:
+
+```powershell
+booklet-split examples\sample-17-pages.pdf --booklet-count 2
+```
+
+## Release Zip
+
+After building the Windows app, create a zip archive with:
+
+```powershell
+.\scripts\package_release.ps1
+```
+
+The release archive is written to:
+
+```text
+release\BookletSplitter-v0.1.0-windows-x64.zip
+```
+
 ## Project Layout
 
 ```text
