@@ -1,14 +1,15 @@
-# Booklet Splitter
+# Booklet Print Layout Assistant
 
 [English README](README.md)
 
-![Booklet Splitter 主界面](docs/images/app-main.png)
+![Booklet Print Layout Assistant 主界面](docs/images/app-main.png)
 
-Booklet Splitter 是一个用于 PDF 小册子分册的桌面工具。它适合这样的场景：
-你已经有一个按阅读顺序排好的 PDF，想把它拆成若干个较薄的小册子 PDF，
-方便后续双面打印、折叠和装订。
+Booklet Print Layout Assistant，中文名“小册子打印排版助手”，是一个用于准备
+小册子打印文件的桌面工具。当前版本先聚焦这样的场景：你已经有一个按阅读顺序
+排好的 PDF，想把它拆成若干个较薄的小册子 PDF，方便后续双面打印、折叠和装订。
 
 当前 `v0.1.0` 是一个刻意收窄功能边界的版本，只专注于 PDF 小册子分册。
+后续可以自然扩展 EPUB、CBZ、图片等来源，以及真正的小册子拼版。
 
 ## 功能
 
@@ -74,27 +75,27 @@ python -m pytest
 ## 运行桌面应用
 
 ```powershell
-booklet-splitter
+booklet-print-layout-assistant
 ```
 
 如果当前 shell 找不到安装后的脚本，可以用：
 
 ```powershell
-python -m booklet_splitter
+python -m booklet_print_layout_assistant
 ```
 
 ## 命令行使用
 
 ```powershell
-booklet-split input.pdf --max-sheets 14
-booklet-split input.pdf --booklet-count 3
-booklet-split input.pdf --booklet-count 3 --output-dir output
+booklet-print input.pdf --max-sheets 14
+booklet-print input.pdf --booklet-count 3
+booklet-print input.pdf --booklet-count 3 --output-dir output
 ```
 
 也可以使用：
 
 ```powershell
-python -m booklet_splitter.cli input.pdf --max-sheets 14
+python -m booklet_print_layout_assistant.cli input.pdf --max-sheets 14
 ```
 
 ## 示例 PDF
@@ -114,7 +115,7 @@ examples\sample-17-pages.pdf
 试着拆分：
 
 ```powershell
-booklet-split examples\sample-17-pages.pdf --booklet-count 2
+booklet-print examples\sample-17-pages.pdf --booklet-count 2
 ```
 
 ## Windows 打包
@@ -129,13 +130,13 @@ Anaconda 或全局 Python 环境里的无关依赖带进发布包。
 打包后的目录：
 
 ```text
-dist\BookletSplitter\
+dist\BookletPrintLayoutAssistant\
 ```
 
 运行：
 
 ```text
-dist\BookletSplitter\BookletSplitter.exe
+dist\BookletPrintLayoutAssistant\BookletPrintLayoutAssistant.exe
 ```
 
 ## 生成 Release Zip
@@ -149,25 +150,39 @@ dist\BookletSplitter\BookletSplitter.exe
 生成：
 
 ```text
-release\BookletSplitter-v0.1.0-windows-x64.zip
+release\BookletPrintLayoutAssistant-v0.1.0-windows-x64.zip
 ```
 
 ## 项目结构
 
 ```text
-src/booklet_splitter/core/      PDF 分册逻辑和清单生成
-src/booklet_splitter/app/       pywebview 桌面集成
-src/booklet_splitter/frontend/  HTML/CSS/JS 界面
+src/booklet_print_layout_assistant/core/      PDF 分册逻辑和清单生成
+src/booklet_print_layout_assistant/app/       pywebview 桌面集成
+src/booklet_print_layout_assistant/frontend/  HTML/CSS/JS 界面
 tests/                          测试
 scripts/                        开发和打包脚本
 ```
 
+## GitHub 检索建议
+
+建议仓库名：
+
+```text
+booklet-print-layout-assistant
+```
+
+建议 topics：
+
+```text
+pdf, booklet, booklet-printing, pdf-splitter, printing, bookbinding,
+imposition, desktop-app, windows, pywebview, pypdf
+```
+
 ## 路线图
 
-- 补充更多截图。
-- 增加更多无版权示例 PDF。
 - 增加真正的 A4 2-up 小册子拼版。
 - 重新引入可选彩页工作流。
+- 增加 EPUB、CBZ、图片来源工作流。
 - 增加安装包形式发布。
 
 ## 许可证

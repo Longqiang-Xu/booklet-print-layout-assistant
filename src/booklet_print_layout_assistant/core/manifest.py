@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from booklet_splitter.core.models import OutputBooklet, SplitResult
-from booklet_splitter.core.planning import format_page_range_zh
+from booklet_print_layout_assistant.core.models import OutputBooklet, SplitResult
+from booklet_print_layout_assistant.core.planning import format_page_range_zh
 
 
 def build_manifest_text(

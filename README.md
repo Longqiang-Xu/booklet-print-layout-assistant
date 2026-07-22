@@ -1,14 +1,14 @@
-# Booklet Splitter
+# Booklet Print Layout Assistant
 
 [中文说明](README.zh-CN.md)
 
-![Booklet Splitter main window](docs/images/app-main.png)
+![Booklet Print Layout Assistant main window](docs/images/app-main.png)
 
-Booklet Splitter is a desktop tool for splitting a reading-order PDF into
-booklet-sized PDF parts. It is designed for PDFs that will later be printed as
-double-sided booklets, folded, and bound in multiple thin volumes.
+Booklet Print Layout Assistant is a desktop assistant for preparing booklet
+print layouts. The current release focuses on splitting reading-order PDFs into
+booklet-sized parts for printing, folding, and binding.
 
-The first release is intentionally narrow. It focuses on one workflow:
+The first release is intentionally narrow. It focuses on one PDF workflow:
 
 1. Choose a PDF.
 2. Choose a booklet splitting plan.
@@ -47,7 +47,7 @@ Each sheet represents four PDF page slots.
 total_sheets = ceil(total_pages / 4)
 ```
 
-When splitting by maximum sheets per booklet, Booklet Splitter first calculates
+When splitting by maximum sheets per booklet, Booklet Print Layout Assistant first calculates
 how many booklets are needed, then balances sheets across booklets.
 
 Example:
@@ -85,27 +85,27 @@ python -m pytest
 After installing the project:
 
 ```powershell
-booklet-splitter
+booklet-print-layout-assistant
 ```
 
 If your shell cannot find installed scripts, use:
 
 ```powershell
-python -m booklet_splitter
+python -m booklet_print_layout_assistant
 ```
 
 ## Command Line
 
 ```powershell
-booklet-split input.pdf --max-sheets 14
-booklet-split input.pdf --booklet-count 3
-booklet-split input.pdf --booklet-count 3 --output-dir output
+booklet-print input.pdf --max-sheets 14
+booklet-print input.pdf --booklet-count 3
+booklet-print input.pdf --booklet-count 3 --output-dir output
 ```
 
 Fallback form:
 
 ```powershell
-python -m booklet_splitter.cli input.pdf --max-sheets 14
+python -m booklet_print_layout_assistant.cli input.pdf --max-sheets 14
 ```
 
 ## Windows Build
@@ -123,13 +123,13 @@ your global Python environment.
 The distributable folder is:
 
 ```text
-dist\BookletSplitter\
+dist\BookletPrintLayoutAssistant\
 ```
 
 Run:
 
 ```text
-dist\BookletSplitter\BookletSplitter.exe
+dist\BookletPrintLayoutAssistant\BookletPrintLayoutAssistant.exe
 ```
 
 ## Examples
@@ -149,7 +149,7 @@ examples\sample-17-pages.pdf
 Try it with:
 
 ```powershell
-booklet-split examples\sample-17-pages.pdf --booklet-count 2
+booklet-print examples\sample-17-pages.pdf --booklet-count 2
 ```
 
 ## Release Zip
@@ -163,26 +163,40 @@ After building the Windows app, create a zip archive with:
 The release archive is written to:
 
 ```text
-release\BookletSplitter-v0.1.0-windows-x64.zip
+release\BookletPrintLayoutAssistant-v0.1.0-windows-x64.zip
 ```
 
 ## Project Layout
 
 ```text
-src/booklet_splitter/core/      PDF splitting logic and manifest generation
-src/booklet_splitter/app/       pywebview desktop integration
-src/booklet_splitter/frontend/  HTML/CSS/JS interface
+src/booklet_print_layout_assistant/core/      PDF splitting logic and manifest generation
+src/booklet_print_layout_assistant/app/       pywebview desktop integration
+src/booklet_print_layout_assistant/frontend/  HTML/CSS/JS interface
 tests/                          unit and smoke tests
 scripts/                        development and build helpers
 ```
 
+## GitHub Discoverability
+
+Suggested repository name:
+
+```text
+booklet-print-layout-assistant
+```
+
+Suggested topics:
+
+```text
+pdf, booklet, booklet-printing, pdf-splitter, printing, bookbinding,
+imposition, desktop-app, windows, pywebview, pypdf
+```
+
 ## Roadmap
 
-- Add release screenshots.
-- Add copyright-safe example PDFs.
-- Add a zip release script.
 - Add true 2-up booklet imposition.
 - Reintroduce optional color-page workflows.
+- Add EPUB, CBZ, and image-source workflows.
+- Add installer-based Windows distribution.
 
 ## License
 

@@ -8,8 +8,8 @@ from typing import Any
 
 import webview
 
-from booklet_splitter.core.pdf_writer import default_output_dir, read_pdf_page_count, split_pdf
-from booklet_splitter.core.planning import build_plan_options, total_sheet_count
+from booklet_print_layout_assistant.core.pdf_writer import default_output_dir, read_pdf_page_count, split_pdf
+from booklet_print_layout_assistant.core.planning import build_plan_options, total_sheet_count
 
 
 def ok(data: dict[str, Any] | None = None) -> dict[str, Any]:

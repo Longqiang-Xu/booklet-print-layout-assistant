@@ -5,4 +5,4 @@ from pathlib import Path
 
 
 def frontend_index_path() -> Path:
-    return Path(resources.files("booklet_splitter").joinpath("frontend", "index.html"))
+    return Path(resources.files("booklet_print_layout_assistant").joinpath("frontend", "index.html"))

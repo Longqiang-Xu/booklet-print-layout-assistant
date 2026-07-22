@@ -3,16 +3,16 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "booklet-splitter"
+name = "booklet-print-layout-assistant"
 version = "0.1.0"
-description = "Split reading-order PDFs into booklet-sized parts for printing."
+description = "Prepare booklet print layouts; currently split reading-order PDFs into booklet-sized parts."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [
-  { name = "booklet-splitter contributors" }
+  { name = "booklet-print-layout-assistant contributors" }
 ]
-keywords = ["pdf", "booklet", "printing", "split"]
+keywords = ["pdf", "booklet", "printing", "layout", "bookbinding", "imposition"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Environment :: Win32 (MS Windows)",
@@ -38,16 +38,16 @@ dev = [
 ]
 
 [project.scripts]
-booklet-split = "booklet_splitter.cli:main"
+booklet-print = "booklet_print_layout_assistant.cli:main"
 
 [project.gui-scripts]
-booklet-splitter = "booklet_splitter.app.window:main"
+booklet-print-layout-assistant = "booklet_print_layout_assistant.app.window:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-booklet_splitter = ["frontend/*.html", "frontend/*.css", "frontend/*.js"]
+booklet_print_layout_assistant = ["frontend/*.html", "frontend/*.css", "frontend/*.js"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

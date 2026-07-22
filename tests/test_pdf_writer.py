@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pypdf import PdfReader, PdfWriter
 
-from booklet_splitter.core.pdf_writer import split_pdf
+from booklet_print_layout_assistant.core.pdf_writer import split_pdf
 
 
 def test_split_pdf_writes_padded_booklet_outputs(tmp_path) -> None:

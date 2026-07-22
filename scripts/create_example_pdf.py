@@ -24,7 +24,7 @@ def draw_page(pdf: canvas.Canvas, page_number: int, total_pages: int) -> None:
 
     pdf.setFillColor(colors.HexColor("#0f172a"))
     pdf.setFont("Helvetica-Bold", 22)
-    pdf.drawString(margin + 20, height - margin - 56, "Booklet Splitter Sample")
+    pdf.drawString(margin + 20, height - margin - 56, "Booklet Print Layout Sample")
 
     pdf.setFont("Helvetica", 12)
     pdf.setFillColor(colors.HexColor("#475569"))
@@ -51,8 +51,8 @@ def create_example_pdf(output_path: Path, page_count: int) -> None:
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     pdf = canvas.Canvas(str(output_path), pagesize=A5, invariant=1)
-    pdf.setTitle("Booklet Splitter Sample PDF")
-    pdf.setAuthor("Booklet Splitter")
+    pdf.setTitle("Booklet Print Layout Assistant Sample PDF")
+    pdf.setAuthor("Booklet Print Layout Assistant")
 
     for page_number in range(1, page_count + 1):
         draw_page(pdf, page_number, page_count)

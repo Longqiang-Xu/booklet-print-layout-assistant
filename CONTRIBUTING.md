@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve Booklet Splitter.
+Thanks for helping improve Booklet Print Layout Assistant.
 
 ## Development Setup
 
@@ -26,4 +26,4 @@ python -m pytest
 .\scripts\build_windows.ps1
 ```
 
-The packaged app will be written to `dist\BookletSplitter\`.
+The packaged app will be written to `dist\BookletPrintLayoutAssistant\`.

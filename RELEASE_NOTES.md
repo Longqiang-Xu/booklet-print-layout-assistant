@@ -1,29 +1,30 @@
-# Booklet Splitter v0.1.0
+# Booklet Print Layout Assistant v0.1.0
 
-This is the first public preview release of Booklet Splitter.
+This is the first public preview release of Booklet Print Layout Assistant.
 
 ## Download
 
 For Windows, download:
 
 ```text
-BookletSplitter-v0.1.0-windows-x64.zip
+BookletPrintLayoutAssistant-v0.1.0-windows-x64.zip
 ```
 
 Unzip it and run:
 
 ```text
-BookletSplitter\BookletSplitter.exe
+BookletPrintLayoutAssistant\BookletPrintLayoutAssistant.exe
 ```
 
 ## Highlights
 
-- Desktop UI for splitting reading-order PDFs into booklet-sized parts.
+- Desktop UI for preparing booklet print layouts.
+- PDF workflow for splitting reading-order PDFs into booklet-sized parts.
 - Split by maximum sheets per booklet.
 - Split by fixed booklet count.
 - Automatic blank-page padding to fill booklet capacity.
 - Print manifest output: `打印清单.txt` and `manifest.txt`.
-- Command line interface: `booklet-split`.
+- Command line interface: `booklet-print`.
 - Copyright-safe 17-page sample PDF.
 
 ## Limitations
@@ -41,4 +42,4 @@ Before packaging this release:
 - `python -m pytest` passed with 8 tests.
 - The sample PDF was rendered and visually checked.
 - The Windows PyInstaller build completed.
-- The packaged `BookletSplitter.exe` started successfully.
+- The packaged `BookletPrintLayoutAssistant.exe` started successfully.

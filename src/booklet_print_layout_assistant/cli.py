@@ -4,13 +4,16 @@ import argparse
 import sys
 from pathlib import Path
 
-from booklet_splitter.core.pdf_writer import split_pdf
+from booklet_print_layout_assistant.core.pdf_writer import split_pdf
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="booklet-split",
-        description="Split a reading-order PDF into booklet-sized PDF parts.",
+        prog="booklet-print",
+        description=(
+            "Prepare booklet print layouts. "
+            "The current command splits a reading-order PDF into booklet-sized parts."
+        ),
     )
     parser.add_argument("input_pdf", type=Path, help="PDF to split.")
     mode = parser.add_mutually_exclusive_group()

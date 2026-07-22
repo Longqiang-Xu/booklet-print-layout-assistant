@@ -1,4 +1,4 @@
-"""PDF booklet splitting toolkit."""
+"""Booklet print layout preparation toolkit."""
 
 __all__ = ["__version__"]
 

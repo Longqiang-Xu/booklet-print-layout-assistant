@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from booklet_splitter.core.manifest import build_manifest_text
-from booklet_splitter.core.models import BookletPlan, OutputBooklet
+from booklet_print_layout_assistant.core.manifest import build_manifest_text
+from booklet_print_layout_assistant.core.models import BookletPlan, OutputBooklet
 
 
 def test_manifest_lists_booklet_ranges_and_files() -> None:

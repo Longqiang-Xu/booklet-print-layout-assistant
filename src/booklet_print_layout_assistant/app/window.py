@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import os
 
-from booklet_splitter.app.api import AppApi
-from booklet_splitter.app.paths import frontend_index_path
+from booklet_print_layout_assistant.app.api import AppApi
+from booklet_print_layout_assistant.app.paths import frontend_index_path
 
 
 def main() -> int:
@@ -14,7 +14,7 @@ def main() -> int:
 
     api = AppApi()
     window = webview.create_window(
-        "PDF Booklet Splitter",
+        "Booklet Print Layout Assistant",
         frontend_index_path().as_uri(),
         js_api=api,
         width=980,
@@ -22,5 +22,5 @@ def main() -> int:
         min_size=(760, 560),
     )
     api.set_window(window)
-    webview.start(debug=os.environ.get("BOOKLET_SPLITTER_DEBUG") == "1")
+    webview.start(debug=os.environ.get("BOOKLET_PRINT_LAYOUT_ASSISTANT_DEBUG") == "1")
     return 0

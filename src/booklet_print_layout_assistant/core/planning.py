@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 
-from booklet_splitter.core.models import BookletPlan, PlanOption
+from booklet_print_layout_assistant.core.models import BookletPlan, PlanOption
 
 
 def total_sheet_count(total_pages: int) -> int:

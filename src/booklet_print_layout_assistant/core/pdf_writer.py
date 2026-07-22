@@ -6,9 +6,9 @@ from pypdf import PdfReader, PdfWriter
 from pypdf._page import PageObject
 from pypdf.generic import NameObject
 
-from booklet_splitter.core.manifest import write_manifest_files
-from booklet_splitter.core.models import BookletPlan, OutputBooklet, SplitResult
-from booklet_splitter.core.planning import make_plan, make_plan_by_count
+from booklet_print_layout_assistant.core.manifest import write_manifest_files
+from booklet_print_layout_assistant.core.models import BookletPlan, OutputBooklet, SplitResult
+from booklet_print_layout_assistant.core.planning import make_plan, make_plan_by_count
 
 
 def read_pdf_page_count(input_pdf: Path) -> int:

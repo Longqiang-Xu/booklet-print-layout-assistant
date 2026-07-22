@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from booklet_splitter.core.planning import (
+from booklet_print_layout_assistant.core.planning import (
     build_plan_options,
     distribute_sheets,
     distribute_sheets_by_count,

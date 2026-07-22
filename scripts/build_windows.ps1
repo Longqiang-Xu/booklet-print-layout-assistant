@@ -15,9 +15,9 @@ if (-not (Test-Path -LiteralPath $python)) {
   --clean `
   --noconfirm `
   --windowed `
-  --name BookletSplitter `
-  --collect-data booklet_splitter `
+  --name BookletPrintLayoutAssistant `
+  --collect-data booklet_print_layout_assistant `
   --exclude-module PyQt5 `
   --exclude-module PyQt6 `
   --exclude-module PySide6 `
-  "src\booklet_splitter\__main__.py"
+  "src\booklet_print_layout_assistant\__main__.py"

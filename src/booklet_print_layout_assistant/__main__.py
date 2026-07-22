@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from booklet_splitter.app.window import main
+from booklet_print_layout_assistant.app.window import main
 
 
 if __name__ == "__main__":
