@@ -1,7 +1,7 @@
 # 小册子打印排版助手 / Booklet Print Layout Assistant
 
 <p align="center">
-  <img src="docs/images/app-main-readme.png" alt="Booklet Print Layout Assistant main window" width="88%">
+  <img src="docs/images/app-main-readme.png" alt="Booklet Print Layout Assistant main window" width="100%">
 </p>
 
 小册子打印排版助手是一个用于准备小册子打印文件的桌面工具。它当前专注于

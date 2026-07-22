@@ -3,7 +3,7 @@
 [English README](README.md)
 
 <p align="center">
-  <img src="docs/images/app-main-readme.png" alt="Booklet Print Layout Assistant 主界面" width="88%">
+  <img src="docs/images/app-main-readme.png" alt="Booklet Print Layout Assistant 主界面" width="100%">
 </p>
 
 Booklet Print Layout Assistant，中文名“小册子打印排版助手”，是一个用于准备
