@@ -1,6 +1,8 @@
 # 小册子打印排版助手 / Booklet Print Layout Assistant
 
-![Booklet Print Layout Assistant main window](docs/images/app-main.png)
+<p align="center">
+  <img src="docs/images/app-main-readme.png" alt="Booklet Print Layout Assistant main window" width="88%">
+</p>
 
 小册子打印排版助手是一个用于准备小册子打印文件的桌面工具。它当前专注于
 **PDF 小册子分册**：把已经按阅读顺序排好的 PDF，拆成适合双面打印、折叠、
