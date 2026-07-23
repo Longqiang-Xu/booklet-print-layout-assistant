@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.2.0 - 2026-07-23
+
 - Added PDF page selection before booklet splitting.
 - Added `booklet-print --pages` for CLI page inclusion/exclusion.
 

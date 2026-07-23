@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "booklet-print-layout-assistant"
-version = "0.1.0"
-description = "Prepare booklet print layouts; currently split reading-order PDFs into booklet-sized parts."
+version = "0.2.0"
+description = "Prepare booklet print layouts from reading-order PDFs with page selection and booklet splitting."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }

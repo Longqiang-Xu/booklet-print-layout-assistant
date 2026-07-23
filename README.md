@@ -60,7 +60,7 @@ printing、PDF splitter、bookbinding、imposition。
 下载：
 
 ```text
-BookletPrintLayoutAssistant-v0.1.0-windows-x64.zip
+BookletPrintLayoutAssistant-v0.2.0-windows-x64.zip
 ```
 
 解压后运行：
@@ -178,7 +178,7 @@ dist\BookletPrintLayoutAssistant\BookletPrintLayoutAssistant.exe
 输出：
 
 ```text
-release\BookletPrintLayoutAssistant-v0.1.0-windows-x64.zip
+release\BookletPrintLayoutAssistant-v0.2.0-windows-x64.zip
 ```
 
 ## 项目结构
@@ -216,8 +216,7 @@ imposition, desktop-app, windows, pywebview, pypdf
 ## English
 
 Booklet Print Layout Assistant is a desktop tool for preparing booklet print
-files. The current release focuses on splitting reading-order PDFs into smaller
-booklet-sized PDFs for duplex printing, folding, and binding.
+files from reading-order PDFs for duplex printing, folding, and binding.
 
 It supports splitting by maximum sheets per booklet or by fixed booklet count,
 selecting pages to include, padding each output to a multiple of four pages, and

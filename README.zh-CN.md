@@ -164,7 +164,7 @@ dist\BookletPrintLayoutAssistant\BookletPrintLayoutAssistant.exe
 生成：
 
 ```text
-release\BookletPrintLayoutAssistant-v0.1.0-windows-x64.zip
+release\BookletPrintLayoutAssistant-v0.2.0-windows-x64.zip
 ```
 
 ## 项目结构

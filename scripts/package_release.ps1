@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$version = "0.1.0"
+$version = "0.2.0"
 $distDir = Join-Path $repoRoot "dist\BookletPrintLayoutAssistant"
 $releaseDir = Join-Path $repoRoot "release"
 $zipPath = Join-Path $releaseDir "BookletPrintLayoutAssistant-v$version-windows-x64.zip"
