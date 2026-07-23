@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.1.0 - Unreleased
+## Unreleased
+
+- Added PDF page selection before booklet splitting.
+- Added `booklet-print --pages` for CLI page inclusion/exclusion.
+
+## 0.1.0 - 2026-07-22
 
 - Created the initial project skeleton.
 - Added PDF booklet splitting by maximum sheet count.

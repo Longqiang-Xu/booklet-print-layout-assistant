@@ -36,3 +36,20 @@ def test_split_pdf_can_pad_rotated_pages(tmp_path) -> None:
 
     assert result.booklets[1].plan.blank_count == 3
     assert len(PdfReader(str(result.booklets[1].path)).pages) == 4
+
+
+def test_split_pdf_can_use_selected_source_pages(tmp_path) -> None:
+    input_pdf = tmp_path / "selected.pdf"
+    writer = PdfWriter()
+    for index in range(1, 7):
+        writer.add_blank_page(width=200 + index, height=300 + index)
+    with input_pdf.open("wb") as output_file:
+        writer.write(output_file)
+
+    result = split_pdf(input_pdf, booklet_count=1, page_selection="2,4,6")
+    output_reader = PdfReader(str(result.booklets[0].path))
+    output_widths = [float(page.mediabox.width) for page in output_reader.pages]
+
+    assert result.page_count == 3
+    assert len(output_reader.pages) == 4
+    assert output_widths == [202.0, 204.0, 206.0, 206.0]

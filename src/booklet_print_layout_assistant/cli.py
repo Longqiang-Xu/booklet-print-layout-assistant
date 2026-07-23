@@ -11,8 +11,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="booklet-print",
         description=(
-            "Prepare booklet print layouts. "
-            "The current command splits a reading-order PDF into booklet-sized parts."
+            "Prepare booklet print layouts by splitting a reading-order PDF into booklet-sized parts."
         ),
     )
     parser.add_argument("input_pdf", type=Path, help="PDF to split.")
@@ -40,6 +39,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Output filename prefix. Defaults to the input PDF stem.",
     )
+    parser.add_argument(
+        "--pages",
+        default=None,
+        help="Pages to include, such as '1-20,25,-3'. A leading '-' starts exclude mode.",
+    )
     return parser
 
 
@@ -54,6 +58,7 @@ def main(argv: list[str] | None = None) -> int:
             max_sheets=args.max_sheets,
             booklet_count=args.booklet_count,
             prefix=args.prefix,
+            page_selection=args.pages,
         )
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)

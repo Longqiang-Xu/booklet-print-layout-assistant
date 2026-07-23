@@ -96,12 +96,36 @@ class AppApi:
         except Exception as exc:
             return fail(str(exc))
 
+    def get_plan_options_for_page_count(
+        self,
+        page_count: int,
+        recommended_max_sheets: int = 14,
+        min_sheets_per_booklet: int = 10,
+        max_sheets_per_booklet: int = 17,
+    ) -> dict[str, Any]:
+        try:
+            options = build_plan_options(
+                int(page_count),
+                recommended_max_sheets=recommended_max_sheets,
+                min_sheets_per_booklet=min_sheets_per_booklet,
+                max_sheets_per_booklet=max_sheets_per_booklet,
+            )
+            return ok(
+                {
+                    "total_sheets": total_sheet_count(int(page_count)),
+                    "plan_options": [option.to_dict() for option in options],
+                }
+            )
+        except Exception as exc:
+            return fail(str(exc))
+
     def split_pdf(self, options: dict[str, Any]) -> dict[str, Any]:
         try:
             input_pdf = str(options.get("input_pdf") or "")
             output_dir = str(options.get("output_dir") or "")
             mode = str(options.get("mode") or "max_sheets")
             prefix = options.get("prefix")
+            selected_pages = options.get("selected_pages") or None
 
             if mode == "fixed_count":
                 result = split_pdf(
@@ -109,6 +133,7 @@ class AppApi:
                     output_dir=output_dir or None,
                     booklet_count=int(options.get("booklet_count") or 1),
                     prefix=str(prefix) if prefix else None,
+                    page_numbers=selected_pages,
                 )
             else:
                 result = split_pdf(
@@ -116,6 +141,7 @@ class AppApi:
                     output_dir=output_dir or None,
                     max_sheets=int(options.get("max_sheets") or 14),
                     prefix=str(prefix) if prefix else None,
+                    page_numbers=selected_pages,
                 )
             return ok(result.to_dict())
         except Exception as exc:

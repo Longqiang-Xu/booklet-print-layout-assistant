@@ -34,6 +34,29 @@
         </div>
       </section>
 
+      <section class="panel page-selector-panel">
+        <div class="section-header">
+          <div>
+            <h2>页面选择</h2>
+            <p id="pageSelectionSummary" class="hint">选择 PDF 后可筛选页面</p>
+          </div>
+          <button id="openPageSelectorButton" class="button button-secondary" type="button" disabled>
+            选择页面
+          </button>
+        </div>
+        <div class="range-row">
+          <input
+            id="pageRangeInput"
+            class="text-input"
+            type="text"
+            placeholder="全部页面，或 1-20,25,-3"
+            disabled
+          />
+          <button id="applyRangeButton" class="button button-secondary" type="button" disabled>应用</button>
+          <button id="resetPagesButton" class="button button-secondary" type="button" disabled>全部</button>
+        </div>
+      </section>
+
       <section class="grid">
         <div class="panel">
           <h2>拆分方式</h2>
@@ -95,6 +118,30 @@
         <ul id="resultList" class="result-list"></ul>
       </section>
     </main>
+
+    <div id="pageSelectorModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="pageSelectorTitle">
+        <div class="modal-header">
+          <h2 id="pageSelectorTitle">选择页面</h2>
+          <button id="closePageSelectorButton" class="icon-button" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="selector-actions">
+          <button id="selectAllPagesButton" class="button button-secondary" type="button">全选</button>
+          <button id="clearPagesButton" class="button button-secondary" type="button">清空</button>
+          <button id="invertPagesButton" class="button button-secondary" type="button">反选</button>
+          <input id="modalRangeInput" class="text-input" type="text" placeholder="1-20,25,-3" />
+          <button id="applyModalRangeButton" class="button button-secondary" type="button">应用</button>
+        </div>
+        <div id="pageGrid" class="page-grid"></div>
+        <div class="modal-footer">
+          <span id="pageSelectorDraftSummary" class="hint"></span>
+          <div class="modal-footer-actions">
+            <button id="cancelPageSelectorButton" class="button button-secondary" type="button">取消</button>
+            <button id="confirmPageSelectorButton" class="button button-primary" type="button">确认选择</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="./app.js"></script>
   </body>

@@ -18,6 +18,7 @@ printing、PDF splitter、bookbinding、imposition。
 ## 功能
 
 - PDF 小册子分册：把一本 PDF 拆成多个适合打印装订的小册子 PDF。
+- 页面选择：支持保留或剔除指定页码后再生成分册。
 - 按每册最多纸张数拆分：例如每册最多 14 张纸，工具会自动计算需要几册。
 - 按固定册数拆分：例如固定分成 3 册，工具会尽量平均分配纸张。
 - 自动补空白页：每册补齐到 4 的倍数页，符合小册子打印的页位需求。
@@ -31,11 +32,12 @@ printing、PDF splitter、bookbinding、imposition。
 - 你有一本较厚的 PDF，想拆成几本更容易折叠和装订的小册子。
 - 你想限制每一册最多使用多少张纸，避免单册太厚。
 - 你已经有按阅读顺序排列的 PDF，只需要完成打印前的分册准备。
+- 你想跳过封面、广告页、空白页或其他不需要打印的页面。
 - 你希望先用打印机驱动或其他拼版工具负责双面、小册子、长边/短边翻转等设置。
 
 ## 支持范围
 
-当前支持以 PDF 为输入，完成小册子分册、空白页补齐和打印清单生成。
+当前支持以 PDF 为输入，完成页面筛选、小册子分册、空白页补齐和打印清单生成。
 
 后续计划支持：
 
@@ -88,6 +90,7 @@ python -m booklet_print_layout_assistant
 booklet-print input.pdf --max-sheets 14
 booklet-print input.pdf --booklet-count 3
 booklet-print input.pdf --booklet-count 3 --output-dir output
+booklet-print input.pdf --pages "1-20,25,-3" --max-sheets 14
 ```
 
 也可以使用模块形式：
@@ -217,11 +220,13 @@ files. The current release focuses on splitting reading-order PDFs into smaller
 booklet-sized PDFs for duplex printing, folding, and binding.
 
 It supports splitting by maximum sheets per booklet or by fixed booklet count,
-pads each output to a multiple of four pages, and generates print manifests.
+selecting pages to include, padding each output to a multiple of four pages, and
+generating print manifests.
 
 ```powershell
 booklet-print input.pdf --max-sheets 14
 booklet-print input.pdf --booklet-count 3
+booklet-print input.pdf --pages "1-20,25,-3" --max-sheets 14
 ```
 
 The input PDF is expected to already be in reading order. True 2-up imposition,
