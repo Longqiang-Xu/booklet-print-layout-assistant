@@ -8,10 +8,12 @@ from booklet_print_layout_assistant.core.planning import (
     suitable_booklet_counts,
 )
 from booklet_print_layout_assistant.core.pdf_writer import split_pdf
+from booklet_print_layout_assistant.core.thumbnails import PageThumbnail, render_page_thumbnails
 
 __all__ = [
     "BookletPlan",
     "OutputBooklet",
+    "PageThumbnail",
     "PlanOption",
     "SplitResult",
     "all_pages",
@@ -23,4 +25,5 @@ __all__ = [
     "parse_page_selection",
     "suitable_booklet_counts",
     "split_pdf",
+    "render_page_thumbnails",
 ]

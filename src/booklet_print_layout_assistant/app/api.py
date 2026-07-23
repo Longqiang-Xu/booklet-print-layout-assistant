@@ -10,6 +10,7 @@ import webview
 
 from booklet_print_layout_assistant.core.pdf_writer import default_output_dir, read_pdf_page_count, split_pdf
 from booklet_print_layout_assistant.core.planning import build_plan_options, total_sheet_count
+from booklet_print_layout_assistant.core.thumbnails import render_page_thumbnails
 
 
 def ok(data: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -114,6 +115,35 @@ class AppApi:
                 {
                     "total_sheets": total_sheet_count(int(page_count)),
                     "plan_options": [option.to_dict() for option in options],
+                }
+            )
+        except Exception as exc:
+            return fail(str(exc))
+
+    def get_page_thumbnails(
+        self,
+        pdf_path: str,
+        start_page: int = 1,
+        count: int = 24,
+        target_width: int = 180,
+    ) -> dict[str, Any]:
+        try:
+            input_path = Path(pdf_path).expanduser().resolve()
+            page_count = read_pdf_page_count(input_path)
+            start = min(max(1, int(start_page)), page_count)
+            batch_count = min(48, max(1, int(count)))
+            end = min(page_count, start + batch_count - 1)
+            thumbnails = render_page_thumbnails(
+                input_path,
+                range(start, end + 1),
+                target_width=int(target_width),
+            )
+            return ok(
+                {
+                    "start_page": start,
+                    "end_page": end,
+                    "page_count": page_count,
+                    "thumbnails": [thumbnail.to_dict() for thumbnail in thumbnails],
                 }
             )
         except Exception as exc:

@@ -10,6 +10,11 @@ const state = {
   planOptions: [],
   selectedPages: [],
   draftSelectedPages: [],
+  pageThumbnails: {},
+  activePreviewPage: 1,
+  isLoadingThumbnails: false,
+  thumbnailError: "",
+  thumbnailLoadToken: 0,
   pageRangeText: "",
   modalRangeText: "",
   isPageSelectorOpen: false,
@@ -50,7 +55,9 @@ const el = {
   planHint: document.getElementById("planHint"),
   pageSelectorModal: document.getElementById("pageSelectorModal"),
   pageGrid: document.getElementById("pageGrid"),
+  pagePreview: document.getElementById("pagePreview"),
   pageSelectorDraftSummary: document.getElementById("pageSelectorDraftSummary"),
+  pageSelectorMultipleHint: document.getElementById("pageSelectorMultipleHint"),
   resultPanel: document.getElementById("resultPanel"),
   resultSummary: document.getElementById("resultSummary"),
   resultList: document.getElementById("resultList"),
@@ -161,7 +168,96 @@ function draftSelectionSummary() {
   if (!state.pageCount) {
     return "";
   }
-  return `已选择 ${state.draftSelectedPages.length} / ${state.pageCount} 页`;
+  const loadingText = state.isLoadingThumbnails ? "，正在加载页面预览..." : "";
+  const errorText = state.thumbnailError ? `，${state.thumbnailError}` : "";
+  return `已选择 ${state.draftSelectedPages.length} / ${state.pageCount} 页${loadingText}${errorText}`;
+}
+
+function pageCountText(count) {
+  return `${count} 页`;
+}
+
+function bookletMultipleHint(pageCount, totalPageCount) {
+  if (!pageCount) {
+    return {
+      title: "尚未选择页面",
+      detail: "请至少选择 1 页后再确认。",
+      filledSlots: 0,
+      isAligned: false,
+    };
+  }
+
+  const remainder = pageCount % 4;
+  if (remainder === 0) {
+    return {
+      title: "已是 4 的倍数",
+      detail: `当前选择 ${pageCountText(pageCount)}，适合小册子打印。`,
+      filledSlots: 4,
+      isAligned: true,
+    };
+  }
+
+  const pagesToAdd = 4 - remainder;
+  const canAddPages = pageCount + pagesToAdd <= totalPageCount;
+  const adjustmentText = canAddPages
+    ? `可再去掉 ${pageCountText(remainder)}，或者再选回 ${pageCountText(pagesToAdd)}。`
+    : `可再去掉 ${pageCountText(remainder)}；若保持当前选择，生成时会补 ${pagesToAdd} 页空白。`;
+
+  return {
+    title: "建议调整到 4 的倍数",
+    detail: `当前选择 ${pageCountText(pageCount)}；${adjustmentText}`,
+    filledSlots: remainder,
+    isAligned: false,
+  };
+}
+
+function renderMultipleHint() {
+  const hint = bookletMultipleHint(state.draftSelectedPages.length, state.pageCount);
+  const slots = Array.from({ length: 4 }, (_, index) => {
+    const filledClass = index < hint.filledSlots ? " filled" : "";
+    return `<span class="multiple-hint-slot${filledClass}"></span>`;
+  }).join("");
+
+  el.pageSelectorMultipleHint.className = `multiple-hint${hint.isAligned ? " aligned" : ""}`;
+  el.pageSelectorMultipleHint.setAttribute("aria-label", `${hint.title}。${hint.detail}`);
+  el.pageSelectorMultipleHint.innerHTML = `
+    <span class="multiple-hint-meter" aria-hidden="true">${slots}</span>
+    <span class="multiple-hint-copy">
+      <strong>${hint.title}</strong>
+      <span>${hint.detail}</span>
+    </span>
+  `;
+}
+
+function resolvedActivePreviewPage() {
+  if (!state.pageCount) {
+    return 0;
+  }
+  const page = Number(state.activePreviewPage) || 1;
+  return Math.min(Math.max(page, 1), state.pageCount);
+}
+
+function updateActivePageCards() {
+  const activePage = resolvedActivePreviewPage();
+  for (const card of el.pageGrid.querySelectorAll(".page-card")) {
+    const isActive = Number(card.dataset.page) === activePage;
+    card.classList.toggle("active", isActive);
+    if (isActive) {
+      card.setAttribute("aria-current", "page");
+    } else {
+      card.removeAttribute("aria-current");
+    }
+  }
+}
+
+function setActivePreviewPage(page) {
+  const nextPage = Math.min(Math.max(Number(page) || 1, 1), state.pageCount || 1);
+  if (state.activePreviewPage === nextPage) {
+    return;
+  }
+  state.activePreviewPage = nextPage;
+  updateActivePageCards();
+  renderPagePreview();
 }
 
 function render() {
@@ -243,23 +339,121 @@ function renderPageSelectorModal() {
   }
 
   el.pageSelectorDraftSummary.textContent = draftSelectionSummary();
+  renderMultipleHint();
   el.confirmPageSelectorButton.disabled = state.draftSelectedPages.length === 0;
+  state.activePreviewPage = resolvedActivePreviewPage();
   renderPageGrid();
+  renderPagePreview();
 }
 
 function renderPageGrid() {
+  const previousScrollTop = el.pageGrid.scrollTop;
   const selected = new Set(state.draftSelectedPages);
+  const activePage = resolvedActivePreviewPage();
   const fragment = document.createDocumentFragment();
   for (let page = 1; page <= state.pageCount; page += 1) {
+    const thumbnail = state.pageThumbnails[page];
+    const isSelected = selected.has(page);
+    const isActive = page === activePage;
     const button = document.createElement("button");
     button.type = "button";
-    button.className = `page-cell${selected.has(page) ? " selected" : ""}`;
-    button.textContent = String(page);
-    button.setAttribute("aria-pressed", selected.has(page) ? "true" : "false");
+    button.className = `page-card${isSelected ? " selected" : " excluded"}${isActive ? " active" : ""}`;
+    button.dataset.page = String(page);
+    button.setAttribute("aria-pressed", isSelected ? "true" : "false");
+    button.setAttribute("aria-label", `第 ${page} 页，${isSelected ? "打印" : "不打印"}`);
+    if (isActive) {
+      button.setAttribute("aria-current", "page");
+    }
+    button.innerHTML = `
+      <span class="page-thumb-wrap">
+        ${
+          thumbnail
+            ? `<img src="${thumbnail.data_url}" alt="第 ${page} 页预览" loading="lazy">`
+            : '<span class="page-thumb-placeholder">加载中</span>'
+        }
+      </span>
+      <span class="page-card-footer">
+        <span>第 ${page} 页</span>
+        <span>${isSelected ? "打印" : "跳过"}</span>
+      </span>
+    `;
+    button.addEventListener("mouseenter", () => setActivePreviewPage(page));
+    button.addEventListener("focus", () => setActivePreviewPage(page));
     button.addEventListener("click", () => toggleDraftPage(page));
     fragment.appendChild(button);
   }
   el.pageGrid.replaceChildren(fragment);
+  el.pageGrid.scrollTop = previousScrollTop;
+}
+
+function renderPagePreview() {
+  const page = resolvedActivePreviewPage();
+  if (!page) {
+    el.pagePreview.replaceChildren();
+    return;
+  }
+
+  const thumbnail = state.pageThumbnails[page];
+  const selected = state.draftSelectedPages.includes(page);
+  el.pagePreview.classList.toggle("excluded", !selected);
+  el.pagePreview.innerHTML = `
+    <div class="page-preview-header">
+      <strong>第 ${page} 页</strong>
+      <span>${selected ? "打印" : "跳过"}</span>
+    </div>
+    <div class="page-preview-image">
+      ${
+        thumbnail
+          ? `<img src="${thumbnail.data_url}" alt="第 ${page} 页预览">`
+          : '<span class="page-thumb-placeholder">加载中</span>'
+      }
+    </div>
+  `;
+}
+
+async function loadPageThumbnails(loadToken) {
+  if (!apiReady() || !state.pdfPath || !state.pageCount) {
+    setState({ thumbnailError: "页面预览暂不可用" });
+    return;
+  }
+
+  const batchSize = 24;
+  setState({ isLoadingThumbnails: true, thumbnailError: "" });
+  for (let startPage = 1; startPage <= state.pageCount; startPage += batchSize) {
+    if (!state.isPageSelectorOpen || state.thumbnailLoadToken !== loadToken) {
+      return;
+    }
+
+    const endPage = Math.min(state.pageCount, startPage + batchSize - 1);
+    const batchAlreadyLoaded = allPageNumbers(endPage - startPage + 1).every(
+      (offset) => state.pageThumbnails[startPage + offset - 1],
+    );
+    if (batchAlreadyLoaded) {
+      continue;
+    }
+
+    const response = await window.pywebview.api.get_page_thumbnails(state.pdfPath, startPage, batchSize, 220);
+    if (!response.ok) {
+      setState({
+        isLoadingThumbnails: false,
+        thumbnailError: `页面预览加载失败：${response.error}`,
+      });
+      return;
+    }
+    if (!state.isPageSelectorOpen || state.thumbnailLoadToken !== loadToken) {
+      return;
+    }
+
+    const nextThumbnails = { ...state.pageThumbnails };
+    for (const thumbnail of response.data.thumbnails) {
+      nextThumbnails[thumbnail.page_number] = thumbnail;
+    }
+    setState({ pageThumbnails: nextThumbnails });
+  }
+
+  if (state.thumbnailLoadToken === loadToken) {
+    setState({ isLoadingThumbnails: false });
+  }
 }
 
 function renderResult() {
@@ -348,6 +542,11 @@ function applyPdfAnalysis(data) {
     outputDir: data.default_output_dir,
     selectedPages,
     draftSelectedPages: selectedPages,
+    pageThumbnails: {},
+    activePreviewPage: 1,
+    isLoadingThumbnails: false,
+    thumbnailError: "",
+    thumbnailLoadToken: state.thumbnailLoadToken + 1,
     pageRangeText: "",
     modalRangeText: "",
     planOptions: data.plan_options,
@@ -394,16 +593,26 @@ function openPageSelector() {
   if (!state.pageCount) {
     return;
   }
+  const loadToken = state.thumbnailLoadToken + 1;
   setState({
     draftSelectedPages: [...state.selectedPages],
+    activePreviewPage: state.selectedPages[0] || 1,
     modalRangeText: "",
     isPageSelectorOpen: true,
+    thumbnailLoadToken: loadToken,
+    thumbnailError: "",
     error: "",
   });
+  loadPageThumbnails(loadToken);
 }
 
 function closePageSelector() {
-  setState({ isPageSelectorOpen: false, modalRangeText: "" });
+  setState({
+    isPageSelectorOpen: false,
+    modalRangeText: "",
+    isLoadingThumbnails: false,
+    thumbnailLoadToken: state.thumbnailLoadToken + 1,
+  });
 }
 
 function toggleDraftPage(page) {
@@ -413,7 +622,7 @@ function toggleDraftPage(page) {
   } else {
     selected.add(page);
   }
-  setState({ draftSelectedPages: [...selected].sort((a, b) => a - b), error: "" });
+  setState({ draftSelectedPages: [...selected].sort((a, b) => a - b), activePreviewPage: page, error: "" });
 }
 
 function selectAllDraftPages() {
